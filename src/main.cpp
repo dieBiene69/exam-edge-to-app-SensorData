@@ -8,6 +8,7 @@
 #include <secrets.h>
 #include <HTTPClient.h>
 #include <Pushsafer.h>
+#include <WiFiManager.h> // https://github.com/tzapu/WiFiManage
 
 //pushsafer
 bool daylight = true;
@@ -29,6 +30,22 @@ uint16_t v_p_i, inf;
 void setup()
 {
   Serial.begin(115200);
+
+  WiFi.mode(WIFI_STA);
+  WiFiManager wm;
+      bool res;
+    // res = wm.autoConnect(); // auto generated AP name from chipid
+    // res = wm.autoConnect("AutoConnectAP"); // anonymous ap
+    res = wm.autoConnect(); // password protected ap
+
+    if(!res) {
+        Serial.println("Failed to connect");
+        // ESP.restart();
+    } 
+    else {
+        //if you get here you have connected to the WiFi    
+        Serial.println("connected...yeey :)");
+    }
 
   pinMode(16, OUTPUT);
   
@@ -58,14 +75,9 @@ void setup()
   }
   Serial.println("Found LTR sensor!");
 
-  WiFi.mode(WIFI_STA);
-  WiFi.disconnect();
+ 
   delay(100);
 
-  // Attempt to connect to Wifi network:
-  Serial.print("Connecting Wifi: ");
-  Serial.println(ssid);
-  WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED)
   {
