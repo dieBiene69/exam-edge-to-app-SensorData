@@ -8,7 +8,7 @@
 #include <secrets.h>
 #include <HTTPClient.h>
 #include <Pushsafer.h>
-#include <WiFiManager.h> // https://github.com/tzapu/WiFiManage
+#include <WiFiManager.h>
 
 //pushsafer
 bool daylight = true;
@@ -34,8 +34,7 @@ void setup()
   WiFi.mode(WIFI_STA);
   WiFiManager wm;
       bool res;
-    // res = wm.autoConnect(); // auto generated AP name from chipid
-    // res = wm.autoConnect("AutoConnectAP"); // anonymous ap
+
     res = wm.autoConnect(); // password protected ap
 
     if(!res) {
@@ -52,18 +51,18 @@ void setup()
 
   Serial.println("SHT31 test");
   if (!sht31.begin(0x44))
-  { // Set to 0x45 for alternate i2c addr
+  { 
     Serial.println("Couldn't find SHT31 sensor!");
     while (1)
       delay(1);
   }
   Serial.println("Found SHT sensor!");
 
-  // Set gain of 1 (see advanced demo for all options!
+
   ltr.setGain(LTR3XX_GAIN_1);
-  // Set integration time of 50ms (see advanced demo for all options!
+  
   ltr.setIntegrationTime(LTR3XX_INTEGTIME_50);
-  // Set measurement rate of 50ms (see advanced demo for all options!
+
   ltr.setMeasurementRate(LTR3XX_MEASRATE_50);
 
   Serial.println("LTR test");
